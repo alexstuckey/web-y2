@@ -1,0 +1,19 @@
+{
+  "name": "web-y2",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexstuckey/web-y2.git"
+  },
+  "author": "Alex Stuckey <alex@stuckey.org.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexstuckey/web-y2/issues"
+  },
+  "homepage": "https://github.com/alexstuckey/web-y2#readme"
+}
