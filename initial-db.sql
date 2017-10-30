@@ -19,9 +19,6 @@ CREATE TABLE Venues (
 );
 
 
-
--- CREATE INDEX Post_ix_categoryId ON Post (categoryId);
-
 INSERT INTO Venues (id, name, postcode, town, url, icon) VALUES (1, 'Grinton Lodge Youth Hostel', 'DL11 6HS', 'Richmond', 'http://www.yha.org.uk/hostel/grinton-lodge', 'http://www.yha.org.uk/sites/all/themes/yha/images/logos/yha_header_logo.png');
 INSERT INTO Venues (id, name, postcode, town, url, icon) VALUES (2, 'Sage Gateshead', 'NE8 2JR', 'Gateshead', 'http://www.sagegateshead.com/', 'http://www.sagegateshead.com/files/images/pageimage/1683.7123dea7/630x397.fitandcrop.jpg');
 
