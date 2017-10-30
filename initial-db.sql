@@ -6,7 +6,7 @@ CREATE TABLE Events (
   url         TEXT      NOT NULL,
   venueId     INTEGER   NOT NULL,
   CONSTRAINT  Event_fk_venueId FOREIGN KEY (venueId)
-    REFERENCES Venue (id) ON UPDATE CASCADE ON DELETE CASCADE
+    REFERENCES Venues (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Venues (
