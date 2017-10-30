@@ -1,0 +1,1 @@
+SELECT Events.* FROM  Events, Venues WHERE Venues.id=2 and Events.venueId=Venues.id;
