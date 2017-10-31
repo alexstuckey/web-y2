@@ -42,6 +42,12 @@ app.post(config.baseURLPath + '/venues', function (req, res) {
   res.send('a POST to venues')
 })
 
+app.use('/static', express.static('static'))
+
+app.get(config.baseURLPath + '/index.html', (req, res) => {
+  res.sendFile('index.html', {root: './static'});
+})
+
 let server = app.listen(config.expressPort, function () {
   console.log('Example app listening on port 3000!')
   // server.close(() => {
