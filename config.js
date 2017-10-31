@@ -1,5 +1,5 @@
 var config = {
-    expressPort: 3000,
+    expressPort: 8090,
     databasePath: "./efg.db"
 }
 
