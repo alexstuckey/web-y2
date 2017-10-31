@@ -1,32 +1,37 @@
 const express = require('express')
 const app = express()
-
-
-
+const config = require('../config.js');
 
 var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database('./abc.db')
-
-db.serialize(function () {
-
-  db.each('SELECT Events.* FROM  Events, Venues WHERE Venues.id=2 and Events.venueId=Venues.id;', function (err, row) {
-    console.log(row.id + ': ' + JSON.stringify(row))
-  })
-
-})
-
-db.close()
-
+var db = new sqlite3.Database(config.databasePath)
 
 
 
 app.get('/events', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
-  res.send(JSON.stringify({ a: 1 }))
+
+  db.all('SELECT * FROM Events', (err, rows) => {
+    res.send(JSON.stringify(rows))
+  })
+
+  // db.close()
+  
 })
 
 app.get('/venues', function (req, res) {
-  res.send('Hello World! venues')
+  res.setHeader('Content-Type', 'application/json')
+
+  let response = { 'venues': {} }
+
+  db.each('SELECT * FROM Venues', (err, row) => {
+    rowIDString = "v_" + row.id
+    delete row.id
+    response['venues'][rowIDString] = row
+  }, () => {
+    // Query completes:
+    res.send(JSON.stringify(response))
+  })
+
 })
 
 app.post('/events', function (req, res) {
@@ -37,6 +42,9 @@ app.post('/venues', function (req, res) {
   res.send('a POST to venues')
 })
 
-app.listen(3000, function () {
+let server = app.listen(config.expressPort, function () {
   console.log('Example app listening on port 3000!')
+  // server.close(() => {
+  //   console.log('Doh :(')
+  // })
 })
