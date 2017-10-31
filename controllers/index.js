@@ -7,7 +7,7 @@ var db = new sqlite3.Database(config.databasePath)
 
 
 
-app.get('/events', function (req, res) {
+app.get(config.baseURLPath + '/events', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   db.all('SELECT * FROM Events', (err, rows) => {
@@ -18,7 +18,7 @@ app.get('/events', function (req, res) {
   
 })
 
-app.get('/venues', function (req, res) {
+app.get(config.baseURLPath + '/venues', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   let response = { 'venues': {} }
@@ -34,11 +34,11 @@ app.get('/venues', function (req, res) {
 
 })
 
-app.post('/events', function (req, res) {
+app.post(config.baseURLPath + '/events', function (req, res) {
   res.send('a POST to events')
 })
 
-app.post('/venues', function (req, res) {
+app.post(config.baseURLPath + '/venues', function (req, res) {
   res.send('a POST to venues')
 })
 
