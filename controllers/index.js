@@ -48,6 +48,10 @@ app.get(config.baseURLPath + '/index.html', (req, res) => {
   res.sendFile('index.html', {root: './static'});
 })
 
+app.get(config.baseURLPath + '/admin.html', (req, res) => {
+  res.sendFile('admin.html', {root: './static'});
+})
+
 let server = app.listen(config.expressPort, function () {
   console.log('Example app listening on port 3000!')
   // server.close(() => {
