@@ -21,13 +21,19 @@ app.get(config.baseURLPath + '/events', function (req, res) {
 app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
-  db.all('SELECT * FROM Events WHERE id='+req.params['event_id'], (err, rows) => {
-    if (rows.length >= 1) {
-      res.send(JSON.stringify(rows))
-    } else {
-      res.send(JSON.stringify({"error": "no such event"}))
-    }
-  })
+  // Check for integer input
+  if (req.params['event_id'] % 1 === 0) {
+    db.all('SELECT * FROM Events WHERE id=?', req.params['event_id'], (err, rows) => {
+      if (rows.length >= 1) {
+        res.send(JSON.stringify(rows))
+      } else {
+        res.send(JSON.stringify({"error": "no such event"}))
+      }
+    })
+  } else {
+    // Not an integer
+    res.send(JSON.stringify({"error": "no such event"}))
+  }
 
   // db.close()
   
