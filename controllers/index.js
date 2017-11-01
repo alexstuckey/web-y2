@@ -18,6 +18,17 @@ app.get(config.baseURLPath + '/events', function (req, res) {
   
 })
 
+app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
+
+  db.all('SELECT * FROM Events WHERE id='+req.params['event_id'], (err, rows) => {
+    res.send(JSON.stringify(rows))
+  })
+
+  // db.close()
+  
+})
+
 app.get(config.baseURLPath + '/venues', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
