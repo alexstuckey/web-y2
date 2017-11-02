@@ -11,6 +11,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="/static/glyphicons.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/static/sticky-footer.css" rel="stylesheet">
@@ -33,10 +35,31 @@
           <input type="text" class="form-control" id="inputKeywords" aria-describedby="keywordsHelp" placeholder="Enter keywords">
           <small id="keywordsHelp" class="form-text text-muted">Please enter your keywords space delimited.</small>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Date</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+
+        <label>Date</label>
+        <div class="row">
+          <div class='col-md-6'>
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker2'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+
         <button type="submit" class="btn btn-primary">Search!</button>
       </form>
 
@@ -47,5 +70,32 @@
         <span class="text-muted">Alex Stuckey, Michaelmas 2017</span>
       </div>
     </footer>
+    
+    <script src="/static/jquery-3.2.1.slim.min.js"></script>
+    <script src="/static/moment.min.js"></script>
+    <script src="/static/popper.min.js"></script>
+    <script src="/static/bootstrap.bundle.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+      $(function () {
+        $('#datetimepicker1').datetimepicker({
+          format: 'DD/MM/YYYY'
+        })
+        $('#datetimepicker2').datetimepicker({
+          format: 'DD/MM/YYYY',
+          useCurrent: false //Important! See issue #1075
+        })
+
+        $("#datetimepicker1").on("dp.change", function (e) {
+          $('#datetimepicker2').data("DateTimePicker").minDate( e.date.add(1, 'days') )
+        })
+        $("#datetimepicker2").on("dp.change", function (e) {
+          $('#datetimepicker1').data("DateTimePicker").maxDate(e.date)
+        })
+    })
+    </script>
+
   </body>
 </html>
