@@ -26,6 +26,20 @@
       </div>
       <p class="lead">Search for events by specifying keywords and/or a date range.</p>
       <p>Use <a href="../sticky-footer-navbar">the sticky footer with a fixed navbar</a> if need be, too.</p>
+
+      <form>
+        <div class="form-group">
+          <label for="inputKeywords">Keywords</label>
+          <input type="text" class="form-control" id="inputKeywords" aria-describedby="keywordsHelp" placeholder="Enter keywords">
+          <small id="keywordsHelp" class="form-text text-muted">Please enter your keywords space delimited.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Date</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Search!</button>
+      </form>
+
     </main>
 
     <footer class="footer">
