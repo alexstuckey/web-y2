@@ -111,6 +111,10 @@
           $('#datetimepicker1').data("DateTimePicker").maxDate(e.date)
         })
     })
+
+      let addRow = (eventID, eventTitle, eventDate, venueName) => {
+        $('#eventsTable tr:last').after('<tr> <th scope="row">'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
+      }
     </script>
 
   </body>
