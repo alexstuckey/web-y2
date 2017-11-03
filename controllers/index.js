@@ -20,6 +20,31 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     console.log('  queried Search')
   } else if (req.query.fromDate && req.query.toDate) {
     console.log('  queried Date')
+
+    let dateFromDate = new Date(req.query.fromDate)
+    let dateToDate = new Date(req.query.toDate)
+
+    if (true) {
+      if ( dateFromDate < dateToDate ) {
+
+      } else {
+        // negative date range
+        console.log('  ERROR date range specified was negative')
+        sendError = {
+          code: 400,
+          string: "date range specified was negative, or less than 1 day."
+        } 
+      }
+
+    } else {
+      // Not valid date
+      console.log('  ERROR not a valid set of dates')
+      sendError = {
+          code: 400,
+          string: "not a valid set of dates"
+        }
+    }
+    
   } else {
     console.log('  no params, return all')
 
