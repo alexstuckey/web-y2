@@ -23,6 +23,10 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
 
     let dateFromDate = new Date(req.query.fromDate)
     let dateToDate = new Date(req.query.toDate)
+    // EXTERNAL CODE
+    // Code from: https://stackoverflow.com/a/46362201/298051
+    re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    // END EXTERNAL CODE
 
     if (true) {
       if ( dateFromDate < dateToDate ) {
