@@ -133,17 +133,23 @@
           }).done((data, textStatus, jqXHR) => {
             console.log(data)
             console.log(jqXHR.responseText)
+
+            // Check for error
+
+
+            // Erase previous table, if exists
+            $("#eventsTable").find("tr:gt(0)").remove()
+
+            // Populate table
+            data.events.forEach((event) => {
+              addRow(event.event_id.substring(2), event.title, moment(event.date).format('LLL'), event.venue.name)
+            })
+
+            // Show table
+            $('#eventsTable').collapse('show')
           })
 
-          // Handle data
 
-          // Erase previous table, if exists
-          $("#eventsTable").find("tr:gt(0)").remove()
-
-          // Populate table
-
-          // Show table
-          $('#eventsTable').collapse('show')
         })
     })
 
