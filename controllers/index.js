@@ -59,8 +59,31 @@ app.post(config.baseURLPath + '/events', function (req, res) {
   res.send('a POST to events')
 })
 
-app.post(config.baseURLPath + '/venues', function (req, res) {
-  res.send('a POST to venues')
+app.post(config.baseURLPath + '/venues/add', function (req, res) {
+
+  if (AUTHENTICATED) {
+    // Validate all the input: name, postcode, town, url, icon
+    if (!name) {
+      res.status(400)
+      res.send(JSON.stringify({"error": "required input for name"}))
+      return
+    }
+
+    //Run SQL
+    db.run('INSERT INTO Venues (name, postcode, town, url, icon) VALUES (?,?,?,?,?)', req.params['name'], req.params['postcode'], req.params['town'], req.params['url'], req.params['icon'], (err) => {
+      if (err) {
+        return console.log(err.message)
+      }
+
+      console.log(`A row has been inserted with rowid ${this.lastID}`);
+    })
+
+  } else {
+    res.status(400)
+    res.send(JSON.stringify({"error": "not authorised, wrong token"}))
+    return
+  }
+  
 })
 
 app.use('/static', express.static('static'))
