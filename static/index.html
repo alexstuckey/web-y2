@@ -112,10 +112,24 @@
         })
 
         $('#submitSearch').click(() => {
+          let fromDate = ''
+          if ($('#datetimepicker1').data("DateTimePicker").date()) {
+            fromDate = $('#datetimepicker1').data("DateTimePicker").date().toISOString().substring(0,10)
+          }
+          let toDate = ''
+          if ($('#datetimepicker2').data("DateTimePicker").date()) {
+            toDate = $('#datetimepicker2').data("DateTimePicker").date().toISOString().substring(0,10)
+          }
+
           // Perform AJAX
           $.ajax({
-            url: '/events2017/events',
-            method: 'GET'
+            url: '/events2017/events/search',
+            method: 'GET',
+            data: {
+              search: $('#inputKeywords').val(),
+              fromDate: fromDate,
+              toDate: toDate
+            }
           }).done((data, textStatus, jqXHR) => {
             console.log(data)
             console.log(jqXHR.responseText)
