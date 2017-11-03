@@ -13,11 +13,11 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   let queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
 
   console.log('GET BASE/events/search', req.query)
-  if (req.query.search && req.query.date) {
+  if (req.query.search && req.query.fromDate && req.query.toDate) {
     console.log('  queried Search & Date')
   } else if (req.query.search) {
     console.log('  queried Search')
-  } else if (req.query.date) {
+  } else if (req.query.fromDate && req.query.toDate) {
     console.log('  queried Date')
   } else {
     console.log('  no params, return all')
