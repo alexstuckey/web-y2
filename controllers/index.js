@@ -10,7 +10,7 @@ var db = new sqlite3.Database(config.databasePath)
 app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
-  let queryString = ''
+  let queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
 
   console.log('GET BASE/events/search', req.query)
   if (req.query.search && req.query.date) {
@@ -22,7 +22,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   } else {
     console.log('  no params, return all')
 
-    queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
+    // Default queryString already set above
   }
 
   db.all(queryString, (err, rows) => {
