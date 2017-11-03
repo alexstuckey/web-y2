@@ -21,14 +21,15 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   } else if (req.query.fromDate && req.query.toDate) {
     console.log('  queried Date')
 
-    let dateFromDate = new Date(req.query.fromDate)
-    let dateToDate = new Date(req.query.toDate)
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
     re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
     // END EXTERNAL CODE
 
-    if (true) {
+    if (re.test(req.query.fromDate) && re.test(req.query.toDate)) {
+      let dateFromDate = new Date(req.query.fromDate)
+      let dateToDate = new Date(req.query.toDate)
+
       if ( dateFromDate < dateToDate ) {
 
       } else {
