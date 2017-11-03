@@ -7,7 +7,7 @@ var db = new sqlite3.Database(config.databasePath)
 
 
 
-app.get(config.baseURLPath + '/events', function (req, res) {
+app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   db.all('SELECT * FROM Events', (err, rows) => {
