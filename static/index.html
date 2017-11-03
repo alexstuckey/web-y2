@@ -148,7 +148,7 @@
     })
 
       let addRow = (eventID, eventTitle, eventDate, venueName) => {
-        $('#eventsTable tr:last').after('<tr> <th scope="row">'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
+        $('#eventsTable tbody').append('<tr> <th scope="row">'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
       }
     </script>
 
