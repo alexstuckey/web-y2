@@ -10,8 +10,44 @@ var db = new sqlite3.Database(config.databasePath)
 app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
-  db.all('SELECT * FROM Events', (err, rows) => {
-    res.send(JSON.stringify(rows))
+  let queryString = ''
+
+  console.log('GET BASE/events/search', req.query)
+  if (req.query.search && req.query.date) {
+    console.log('  queried Search & Date')
+  } else if (req.query.search) {
+    console.log('  queried Search')
+  } else if (req.query.date) {
+    console.log('  queried Date')
+  } else {
+    console.log('  no params, return all')
+
+    queryString = 'SELECT * FROM Events'
+    queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
+  }
+
+  db.all(queryString, (err, rows) => {
+    let results = { events: [] }
+
+    results.events = rows.map((row) => {
+      return newRow = {
+        event_id: 'e_' + row.eventID,
+        title: row.eventTitle,
+        blurb: row.eventBlurb,
+        date: row.eventDate,
+        url: row.eventURL,
+        venue: {
+          name: row.venueName,
+          postcode: row.venuePostcode,
+          town: row.venueTown,
+          url: row.venueURL,
+          icon: row.venueIcon,
+          venue_id: 'v_' + row.venueID 
+        }
+      }
+    })
+
+    res.send(JSON.stringify(results))
   })
 
   // db.close()
