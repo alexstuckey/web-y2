@@ -22,7 +22,6 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   } else {
     console.log('  no params, return all')
 
-    queryString = 'SELECT * FROM Events'
     queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
   }
 
