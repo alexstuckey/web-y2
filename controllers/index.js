@@ -62,12 +62,12 @@ app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
       if (rows.length >= 1) {
         res.send(JSON.stringify(rows))
       } else {
-        res.send(JSON.stringify({"error": "no such event"}))
+        res.status(400).send(JSON.stringify({"error": "no such event"}))
       }
     })
   } else {
     // Not an integer
-    res.send(JSON.stringify({"error": "no such event"}))
+    res.status(400).send(JSON.stringify({"error": "no such event"}))
   }
 
   // db.close()
