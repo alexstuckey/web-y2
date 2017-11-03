@@ -11,6 +11,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   let queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
+  let sendError = false
 
   console.log('GET BASE/events/search', req.query)
   if (req.query.search && req.query.fromDate && req.query.toDate) {
@@ -25,29 +26,35 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     // Default queryString already set above
   }
 
-  db.all(queryString, (err, rows) => {
-    let results = { events: [] }
+  if (sendError == false) {
 
-    results.events = rows.map((row) => {
-      return newRow = {
-        event_id: 'e_' + row.eventID,
-        title: row.eventTitle,
-        blurb: row.eventBlurb,
-        date: row.eventDate,
-        url: row.eventURL,
-        venue: {
-          name: row.venueName,
-          postcode: row.venuePostcode,
-          town: row.venueTown,
-          url: row.venueURL,
-          icon: row.venueIcon,
-          venue_id: 'v_' + row.venueID 
+    db.all(queryString, (err, rows) => {
+      let results = { events: [] }
+
+      results.events = rows.map((row) => {
+        return newRow = {
+          event_id: 'e_' + row.eventID,
+          title: row.eventTitle,
+          blurb: row.eventBlurb,
+          date: row.eventDate,
+          url: row.eventURL,
+          venue: {
+            name: row.venueName,
+            postcode: row.venuePostcode,
+            town: row.venueTown,
+            url: row.venueURL,
+            icon: row.venueIcon,
+            venue_id: 'v_' + row.venueID 
+          }
         }
-      }
-    })
+      })
 
-    res.send(JSON.stringify(results))
-  })
+      res.send(JSON.stringify(results))
+    })
+  } else {
+    res.status(sendError.code)
+    res.send(JSON.stringify({"error": sendError.string}))
+  }
 
   // db.close()
   
