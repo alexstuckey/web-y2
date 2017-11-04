@@ -183,6 +183,16 @@
       let addRow = (event) => {
         $('<tr data-toggle="modal" data-target="#eventModal"> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title +'</td> <td>'+ moment(event.date).format('LLL') +'</td> <td>'+ event.venue.name +'</td> </tr>').appendTo('#eventsTable tbody').data('eventObj', event)
       }
+
+      $('#eventModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var eventObj = button.data('eventObj') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(eventObj.title)
+        modal.find('.modal-body input').val(eventObj.venue.name)
+      })
     </script>
 
   </body>
