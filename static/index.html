@@ -102,6 +102,7 @@
                 <br>
                 <br>
                 <h3>Venue</h3>
+                  <img src="" class="img-thumbnail" id="modalVenueIcon" alt="Venue icon">
                   <h4>Name</h4>
                   <p id="modalVenueName">venue name</p>
                   <h4>Town</h4>
@@ -198,6 +199,7 @@
         modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb)
         modal.find('.modal-body #modalVenueName').text(eventObj.venue.name)
         modal.find('.modal-body #modalVenueTown').text(eventObj.venue.town)
+        modal.find('.modal-body #modalVenueIcon').attr('src', eventObj.venue.icon)
       })
     </script>
 
