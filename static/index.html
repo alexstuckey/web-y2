@@ -143,9 +143,7 @@
             $("#eventsTable").find("tr:gt(0)").remove()
 
             // Populate table
-            data.events.forEach((event) => {
-              addRow(event.event_id.substring(2), event.title, moment(event.date).format('LLL'), event.venue.name)
-            })
+            data.events.forEach( addRow )
 
             // Show table
             $('#eventsTable').collapse('show')
@@ -158,8 +156,8 @@
         })
     })
 
-      let addRow = (eventID, eventTitle, eventDate, venueName) => {
-        $('#eventsTable tbody').append('<tr> <th>'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
+      let addRow = (event) => {
+        $('<tr data-toggle="modal" data-target="#eventModal"> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title +'</td> <td>'+ moment(event.date).format('LLL') +'</td> <td>'+ event.venue.name +'</td> </tr>').appendTo('#eventsTable tbody').data('eventObj', event)
       }
     </script>
 
