@@ -16,71 +16,79 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/sticky-footer.css" rel="stylesheet">
+
+    <style type="text/css">
+      table.collapse.show {
+        display: table;
+      }
+    </style>
   </head>
 
   <body>
 
     <!-- Begin page content -->
-    <main role="main" class="container-fluid">
-      <div class="mt-1">
-        <h1>Web Programming Assignment</h1>
-        <h2>Events search</h2>
-      </div>
-      <p class="lead">Search for events by specifying keywords and/or a date range.</p>
-      <p>Use <a href="../sticky-footer-navbar">the sticky footer with a fixed navbar</a> if need be, too.</p>
-
-      <form>
-        <div class="form-group">
-          <label for="inputKeywords">Keywords</label>
-          <input type="text" class="form-control" id="inputKeywords" aria-describedby="keywordsHelp" placeholder="Enter keywords">
-          <small id="keywordsHelp" class="form-text text-muted">Please enter your keywords space delimited.</small>
+    <div class="container-fluid">
+      <main role="main" class="container-fluid">
+        <div class="mt-1">
+          <h1>Web Programming Assignment</h1>
+          <h2>Events search</h2>
         </div>
+        <p class="lead">Search for events by specifying keywords and/or a date range.</p>
+        <p>Use <a href="../sticky-footer-navbar">the sticky footer with a fixed navbar</a> if need be, too.</p>
 
-        <label>Date</label>
-        <div class="row">
-          <div class='col-md-6'>
-            <div class="form-group">
-              <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-              </div>
-              <small id="dateHelp" class="form-text text-muted">Within with range</small>
-            </div>
+        <form>
+          <div class="form-group">
+            <label for="inputKeywords">Keywords</label>
+            <input type="text" class="form-control" id="inputKeywords" aria-describedby="keywordsHelp" placeholder="Enter keywords">
+            <small id="keywordsHelp" class="form-text text-muted">Please enter your keywords space delimited.</small>
           </div>
-          <div class='col-md-6'>
-            <div class="form-group">
-              <div class='input-group date' id='datetimepicker2'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+
+          <label>Date</label>
+          <div class="row">
+            <div class='col-md-6'>
+              <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+                <small id="dateHelp" class="form-text text-muted">Within with range</small>
               </div>
             </div>
+            <div class='col-md-6'>
+              <div class="form-group">
+                <div class='input-group date' id='datetimepicker2'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <button type="button" class="btn btn-primary" id="submitSearch">Search!</button>
-      </form>
+          <button type="button" class="btn btn-primary" id="submitSearch">Search!</button>
+        </form>
 
-      <br>
+        <br>
 
-      <table class="table collapse table-hover" id="eventsTable">
-        <thead>
-          <tr>
-            <th scope="col">Nº</th>
-            <th scope="col">Title</th>
-            <th scope="col">Date</th>
-            <th scope="col">Venue name</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+        <table class="table collapse table-hover" id="eventsTable">
+          <thead>
+            <tr>
+              <th>Nº</th>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Venue name</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
 
-    </main>
+      </main>
 
+    </div>
     <footer class="footer">
       <div class="container">
         <span class="text-muted">Alex Stuckey, Michaelmas 2017</span>
@@ -151,7 +159,7 @@
     })
 
       let addRow = (eventID, eventTitle, eventDate, venueName) => {
-        $('#eventsTable tbody').append('<tr> <th scope="row">'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
+        $('#eventsTable tbody').append('<tr> <th>'+ eventID +'</th> <td>'+ eventTitle +'</td> <td>'+ eventDate +'</td> <td>'+ venueName +'</td> </tr>')
       }
     </script>
 
