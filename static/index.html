@@ -97,11 +97,15 @@
                 </button>
               </div>
               <div class="modal-body">
-                <h3>Blurb</h3>
-                <p>Some blurb</p>
+                <h4>Blurb</h4>
+                <p id="modalEventBlurb">Some blurb</p>
                 <br>
-                <h3>Blurb</h3>
-                <p>Some blurb</p>
+                <br>
+                <h3>Venue</h3>
+                  <h4>Name</h4>
+                  <p id="modalVenueName">venue name</p>
+                  <h4>Town</h4>
+                  <p id="modalVenueTown">venue town</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,7 +195,9 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(eventObj.title)
-        modal.find('.modal-body input').val(eventObj.venue.name)
+        modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb)
+        modal.find('.modal-body #modalVenueName').text(eventObj.venue.name)
+        modal.find('.modal-body #modalVenueTown').text(eventObj.venue.town)
       })
     </script>
 
