@@ -175,23 +175,31 @@ app.post(config.baseURLPath + '/events', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
+  console.log(req.body)
+
+  let AUTHENTICATED = true
 
   if (AUTHENTICATED) {
-    // Validate all the input: name, postcode, town, url, icon
-    if (!name) {
+    // Validate all the input:
+    //   REQUIRED: name
+    //   OPTIOANL: postcode, town, url, icon
+    if (!req.body.name) {
       res.status(400)
       res.send(JSON.stringify({"error": "required input for name"}))
       return
+    } else {
+      //Run SQL
+      db.run('INSERT INTO Venues (venueName, venuePostcode, venueTown, venueURL, venueIcon) VALUES (?,?,?,?,?)', req.body.name, req.body.postcode, req.body.town, req.body.url, req.body.icon, (err) => {
+        if (err) {
+          return console.log(err.message)
+        }
+        console.log(`A row has been inserted with rowid ${this.lastID}`);
+        res.status(201)
+        res.location(config.baseURLPath + '/venues')
+        res.send(JSON.stringify({"success": "venue inserted"}))
+        return
+      })
     }
-
-    //Run SQL
-    db.run('INSERT INTO Venues (name, postcode, town, url, icon) VALUES (?,?,?,?,?)', req.params['name'], req.params['postcode'], req.params['town'], req.params['url'], req.params['icon'], (err) => {
-      if (err) {
-        return console.log(err.message)
-      }
-
-      console.log(`A row has been inserted with rowid ${this.lastID}`);
-    })
 
   } else {
     res.status(400)
