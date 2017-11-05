@@ -170,11 +170,11 @@
         $('#submitSearch').click(() => {
           let fromDate = ''
           if ($('#datetimepicker1').data("DateTimePicker").date()) {
-            fromDate = $('#datetimepicker1').data("DateTimePicker").date().toISOString().substring(0,10)
+            fromDate = $('#datetimepicker1').data("DateTimePicker").date().add(6, 'h').toISOString().substring(0,10)
           }
           let toDate = ''
           if ($('#datetimepicker2').data("DateTimePicker").date()) {
-            toDate = $('#datetimepicker2').data("DateTimePicker").date().toISOString().substring(0,10)
+            toDate = $('#datetimepicker2').data("DateTimePicker").date().add(6, 'h').toISOString().substring(0,10)
           }
 
           // Perform AJAX
