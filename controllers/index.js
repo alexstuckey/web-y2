@@ -175,8 +175,36 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
 
 })
 
-app.post(config.baseURLPath + '/events', function (req, res) {
-  res.send('a POST to events')
+app.post(config.baseURLPath + '/events/add', function (req, res) {
+  console.log(req.body)
+  if (isAuthenticated()) {
+    // Validate all the input:
+    //   REQUIRED: (id) title, venue_id, date
+    //   OPTIOANL: url, blurb
+    if (!req.body.title || !req.body.venue_id || !req.body.date) {
+      res.status(400)
+      res.send(JSON.stringify({"error": "missing required input parameters"}))
+      return
+    } else {
+      //Run SQL
+      db.run('INSERT INTO Events (eventTitle, eventBlurb, eventDate, eventURL, eventVenueID) VALUES (?,?,?,?,?)', req.body.title, req.body.blurb, req.body.date, req.body.url, req.body.venue_id, (err) => {
+        if (err) {
+          return console.log(err.message)
+        }
+        console.log(`An event has been inserted with rowid ${this.lastID}`);
+        res.status(201)
+        res.location(config.baseURLPath + '/events/get/' + this.lastID)
+        res.send(JSON.stringify({"success": "event inserted with id" + this.lastID}))
+        return
+      })
+    }
+
+  } else {
+    res.status(400)
+    res.send(JSON.stringify({"error": "not authorised, wrong token"}))
+    return
+  }
+
 })
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
