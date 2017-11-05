@@ -32,6 +32,10 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
       let dateToDate = new Date(req.query.toDate)
 
       if ( dateFromDate < dateToDate ) {
+        queryFilter = (event) => {
+          let eventDate = new Date(event.date)
+          return (eventDate > dateFromDate && eventDate < dateToDate)
+        }
 
       } else {
         // negative date range
