@@ -157,8 +157,8 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
   let response = { 'venues': {} }
 
   db.each('SELECT * FROM Venues', (err, row) => {
-    rowIDString = "v_" + row.id
-    delete row.id
+    rowIDString = "v_" + row.venueID
+    delete row.venueID
     response['venues'][rowIDString] = row
   }, () => {
     // Query completes:
