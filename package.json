@@ -18,6 +18,7 @@
   "homepage": "https://github.com/alexstuckey/web-y2#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "nodemon": "^1.12.1",
     "sqlite3": "^3.1.13"
   }
 }
