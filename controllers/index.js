@@ -19,6 +19,27 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     console.log('  queried Search & Date')
   } else if (req.query.search) {
     console.log('  queried Search')
+
+    // First, split the keywords
+    let keywords = req.query.search.split(' ')
+    // Second, move all to lowercase
+    keywords = keywords.map((keyword) => {
+      return keyword.toLowerCase()
+    })
+    console.log(keywords)
+
+    // Third, build a filter to find keywords in date
+    queryFilters.push((event) => {
+      // Check whether each keywords exists in the event
+      let appearances = keywords.map((keyword) => {
+        return event.title.toLowerCase().includes(keyword)
+      })
+      // Apply logical AND to array of booleans
+      return appearances.reduce((prev, i) => {
+        return prev && i
+      }, true)
+    })
+
   } else if (req.query.fromDate && req.query.toDate) {
     console.log('  queried Date')
 
