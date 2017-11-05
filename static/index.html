@@ -97,16 +97,33 @@
                 </button>
               </div>
               <div class="modal-body">
-                <h4>Blurb</h4>
-                <p id="modalEventBlurb">Some blurb</p>
-                <br>
-                <br>
-                <h3>Venue</h3>
-                  <img src="" class="img-thumbnail" id="modalVenueIcon" alt="Venue icon">
-                  <h4>Name</h4>
-                  <p id="modalVenueName">venue name</p>
-                  <h4>Town</h4>
-                  <p id="modalVenueTown">venue town</p>
+                <dl class="row">
+                  <dt class="col-sm-3">Blurb</dt>
+                  <dd class="col-sm-9" id="modalEventBlurb"></dd>
+
+                  <dt class="col-sm-3">Date</dt>
+                  <dd class="col-sm-9" id="modalEventDate"></dd>
+
+                  <dt class="col-sm-3">Link</dt>
+                  <dd class="col-sm-9"><a id="modalEventURL"></a></dd>
+
+                  <dt class="col-sm-3">Venue</dt>
+                  <dd class="col-sm-9">
+                    <dl class="row">
+                      <dt class="col-sm-4">Name</dt>
+                      <dd class="col-sm-8" id="modalVenueName"></dd>
+
+                      <dt class="col-sm-4">Postcode</dt>
+                      <dd class="col-sm-8" id="modalVenuePostcode"></dd>
+
+                      <dt class="col-sm-4">Town</dt>
+                      <dd class="col-sm-8" id="modalVenueTown"></dd>
+
+                      <dt class="col-sm-4">Link</dt>
+                      <dd class="col-sm-9"><a id="modalVenueURL"></a></dd>
+                    </dl>
+                  </dd>
+                </dl>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -197,8 +214,12 @@
         var modal = $(this)
         modal.find('.modal-title').text(eventObj.title)
         modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb)
+        modal.find('.modal-body #modalEventDate').text(eventObj.date)
+        modal.find('.modal-body #modalEventURL').text(eventObj.url).attr('href', eventObj.url)
         modal.find('.modal-body #modalVenueName').text(eventObj.venue.name)
+        modal.find('.modal-body #modalVenuePostcode').text(eventObj.venue.postcode)
         modal.find('.modal-body #modalVenueTown').text(eventObj.venue.town)
+        modal.find('.modal-body #modalVenueURL').text(eventObj.venue.url).attr('href', eventObj.venue.url)
         modal.find('.modal-body #modalVenueIcon').attr('src', eventObj.venue.icon)
       })
     </script>
