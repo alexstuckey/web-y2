@@ -97,7 +97,7 @@ app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
   if (req.params['event_id'] % 1 === 0) {
     db.all('SELECT * FROM Events WHERE eventID=?', req.params['event_id'], (err, rows) => {
       if (rows.length >= 1) {
-        res.send(JSON.stringify(rows))
+        res.send(JSON.stringify(rows[0]))
       } else {
         res.status(400).send(JSON.stringify({"error": "no such event"}))
       }
