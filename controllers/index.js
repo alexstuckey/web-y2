@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const config = require('../config.js');
 
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+
 var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database(config.databasePath)
 
