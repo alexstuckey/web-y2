@@ -1,5 +1,5 @@
 CREATE TABLE Events (
-  eventID          TEXT      PRIMARY KEY,
+  eventID          INTEGER   PRIMARY KEY,
   eventTitle       TEXT      NOT NULL,
   eventBlurb       TEXT,
   eventDate        TEXT      NOT NULL,
