@@ -195,7 +195,7 @@ app.post(config.baseURLPath + '/venues/add', function (req, res) {
         if (err) {
           return console.log(err.message)
         }
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
+        console.log(`A venue has been inserted with rowid ${this.lastID}`);
         res.status(201)
         res.location(config.baseURLPath + '/venues')
         res.send(JSON.stringify({"success": "venue inserted"}))
