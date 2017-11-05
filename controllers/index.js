@@ -180,7 +180,6 @@ app.post(config.baseURLPath + '/events', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
-  console.log(req.body)
 
   if (isAuthenticated()) {
     // Validate all the input:
