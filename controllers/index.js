@@ -9,6 +9,11 @@ var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database(config.databasePath)
 
 
+let isAuthenticated = () => {
+  return true
+}
+
+
 
 app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
@@ -177,9 +182,7 @@ app.post(config.baseURLPath + '/events', function (req, res) {
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
   console.log(req.body)
 
-  let AUTHENTICATED = true
-
-  if (AUTHENTICATED) {
+  if (isAuthenticated()) {
     // Validate all the input:
     //   REQUIRED: name
     //   OPTIOANL: postcode, town, url, icon
