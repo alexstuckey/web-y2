@@ -1,9 +1,9 @@
 CREATE TABLE Events (
   eventID          TEXT      PRIMARY KEY,
   eventTitle       TEXT      NOT NULL,
-  eventBlurb       TEXT      NOT NULL,
+  eventBlurb       TEXT,
   eventDate        TEXT      NOT NULL,
-  eventURL         TEXT      NOT NULL,
+  eventURL         TEXT,
   eventVenueID     INTEGER   NOT NULL,
   CONSTRAINT  Event_fk_venueId FOREIGN KEY (eventVenueID)
     REFERENCES Venues (venueID) ON UPDATE CASCADE ON DELETE CASCADE
@@ -12,10 +12,10 @@ CREATE TABLE Events (
 CREATE TABLE Venues (
   venueID          INTEGER   PRIMARY KEY,
   venueName        TEXT      NOT NULL,
-  venuePostcode    TEXT      NOT NULL,
-  venueTown        TEXT      NOT NULL,
-  venueURL         TEXT      NOT NULL,
-  venueIcon        TEXT      NOT NULL
+  venuePostcode    TEXT,
+  venueTown        TEXT,
+  venueURL         TEXT,
+  venueIcon        TEXT
 );
 
 
