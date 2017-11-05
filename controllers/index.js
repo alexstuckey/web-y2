@@ -11,6 +11,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   let queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
+  let queryFilter = (event) => { return true }
   let sendError = false
 
   console.log('GET BASE/events/search', req.query)
@@ -78,6 +79,9 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
           }
         }
       })
+
+      // Apply an arbitratry filter
+      results.events = results.events.filter(queryFilter)
 
       res.send(JSON.stringify(results))
     })
