@@ -217,7 +217,7 @@
         var modal = $(this)
         modal.find('.modal-title').text(eventObj.title)
         modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb)
-        modal.find('.modal-body #modalEventDate').text(eventObj.date)
+        modal.find('.modal-body #modalEventDate').text(moment(eventObj.date).format('LLL'))
         modal.find('.modal-body #modalEventURL').text(eventObj.url).attr('href', eventObj.url)
         modal.find('.modal-body #modalVenueName').text(eventObj.venue.name)
         modal.find('.modal-body #modalVenuePostcode').text(eventObj.venue.postcode)
