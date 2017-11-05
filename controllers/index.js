@@ -11,7 +11,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   let queryString = 'SELECT Events.*, Venues.* FROM Events, Venues WHERE Events.eventVenueID=Venues.venueID;'
-  let queryFilter = (event) => { return true }
+  let queryFilters = []
   let sendError = false
 
   console.log('GET BASE/events/search', req.query)
@@ -32,10 +32,10 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
       let dateToDate = new Date(req.query.toDate)
 
       if ( dateFromDate < dateToDate ) {
-        queryFilter = (event) => {
+        queryFilters.push((event) => {
           let eventDate = new Date(event.date)
           return (eventDate > dateFromDate && eventDate < dateToDate)
-        }
+        })
 
       } else {
         // negative date range
@@ -84,8 +84,10 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
         }
       })
 
-      // Apply an arbitratry filter
-      results.events = results.events.filter(queryFilter)
+      // Apply arbitratry filters
+      queryFilters.forEach( (queryFilter) => {
+        results.events = results.events.filter(queryFilter)
+      })
 
       res.send(JSON.stringify(results))
     })
