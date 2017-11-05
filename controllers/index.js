@@ -14,12 +14,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   let queryFilters = []
   let sendError = false
 
-  console.log('GET BASE/events/search', req.query)
-  if (req.query.search && req.query.fromDate && req.query.toDate) {
-    console.log('  queried Search & Date')
-  } else if (req.query.search) {
-    console.log('  queried Search')
-
+  let applySearch = () => {
     // First, split the keywords
     let keywords = req.query.search.split(' ')
     // Second, move all to lowercase
@@ -39,10 +34,9 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
         return prev && i
       }, true)
     })
+  }
 
-  } else if (req.query.fromDate && req.query.toDate) {
-    console.log('  queried Date')
-
+  let applyDate = () => {
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
     re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
@@ -75,6 +69,21 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
           string: "not a valid set of dates"
         }
     }
+  }
+
+  console.log('GET BASE/events/search', req.query)
+  if (req.query.search && req.query.fromDate && req.query.toDate) {
+    console.log('  queried Search & Date')
+    applySearch()
+    applyDate()
+
+  } else if (req.query.search) {
+    console.log('  queried Search')
+    applySearch()
+
+  } else if (req.query.fromDate && req.query.toDate) {
+    console.log('  queried Date')
+    applyDate()
     
   } else {
     console.log('  no params, return all')
