@@ -215,14 +215,40 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(eventObj.title)
-        modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb)
         modal.find('.modal-body #modalEventDate').text(moment(eventObj.date).format('LLL'))
-        modal.find('.modal-body #modalEventURL').text(eventObj.url).attr('href', eventObj.url)
         modal.find('.modal-body #modalVenueName').text(eventObj.venue.name)
-        modal.find('.modal-body #modalVenuePostcode').text(eventObj.venue.postcode)
-        modal.find('.modal-body #modalVenueTown').text(eventObj.venue.town)
-        modal.find('.modal-body #modalVenueURL').text(eventObj.venue.url).attr('href', eventObj.venue.url)
-        modal.find('.modal-body #modalVenueIcon').attr('src', eventObj.venue.icon)
+
+        // Optional values need to be checked
+        if (eventObj.venue.postcode) {
+          modal.find('.modal-body #modalVenuePostcode').text(eventObj.venue.postcode).removeClass('text-muted')
+        } else {
+          modal.find('.modal-body #modalVenuePostcode').text('No value').addClass('text-muted')
+        }
+        if (eventObj.url) {
+          modal.find('.modal-body #modalEventURL').text(eventObj.url).removeClass('text-muted').attr('href', eventObj.url)
+        } else {
+          modal.find('.modal-body #modalEventURL').text('No value').addClass('text-muted').attr('href', '')
+        }
+        if (eventObj.blurb) {
+          modal.find('.modal-body #modalEventBlurb').text(eventObj.blurb).removeClass('text-muted')
+        } else {
+          modal.find('.modal-body #modalEventBlurb').text('No value').addClass('text-muted')
+        }
+        if (eventObj.venue.icon) {
+          modal.find('.modal-body #modalVenueIcon').attr('src', eventObj.venue.icon)
+        } else {
+          modal.find('.modal-body #modalVenueIcon').attr('src', '')
+        }
+        if (eventObj.venue.url) {
+          modal.find('.modal-body #modalVenueURL').text(eventObj.venue.url).removeClass('text-muted').attr('href', eventObj.venue.url)
+        } else {
+          modal.find('.modal-body #modalVenueURL').text('No value').addClass('text-muted').attr('href', '')
+        }
+        if (eventObj.venue.town) {
+          modal.find('.modal-body #modalVenueTown').text(eventObj.venue.town).removeClass('text-muted')
+        } else {
+          modal.find('.modal-body #modalVenueTown').text('No value').addClass('text-muted')
+        }
       })
     </script>
 
