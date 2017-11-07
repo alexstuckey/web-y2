@@ -186,17 +186,27 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
       res.send(JSON.stringify({"error": "missing required input parameters"}))
       return
     } else {
-      //Run SQL
-      db.run('INSERT INTO Events (eventTitle, eventBlurb, eventDate, eventURL, eventVenueID) VALUES (?,?,?,?,?)', req.body.title, req.body.blurb, req.body.date, req.body.url, req.body.venue_id, (err) => {
-        if (err) {
-          return console.log(err.message)
+      // Before insert, check that a venue exists with that id
+
+      db.all('SELECT * FROM Venues WHERE venueID=?', req.body.venue_id, (err, rows) => {
+        if (rows.length == 1) {
+          db.run('INSERT INTO Events (eventTitle, eventBlurb, eventDate, eventURL, eventVenueID) VALUES (?,?,?,?,?)', req.body.title, req.body.blurb, req.body.date, req.body.url, req.body.venue_id, (err) => {
+            if (err) {
+              return console.log(err.message)
+            }
+            console.log(`An event has been inserted with rowid ${this.lastID}`);
+            res.status(201)
+            res.location(config.baseURLPath + '/events/get/' + this.lastID)
+            res.send(JSON.stringify({"success": "event inserted with id" + this.lastID}))
+            return
+          })
+        } else {
+          res.status(400)
+          res.send(JSON.stringify({"error": "event cannot be inserted due to an invalid venue_id"}))
+          return
         }
-        console.log(`An event has been inserted with rowid ${this.lastID}`);
-        res.status(201)
-        res.location(config.baseURLPath + '/events/get/' + this.lastID)
-        res.send(JSON.stringify({"success": "event inserted with id" + this.lastID}))
-        return
       })
+
     }
 
   } else {
