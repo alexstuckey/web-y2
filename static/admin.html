@@ -1,5 +1,144 @@
-<html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--     <link rel="icon" href="../../../../favicon.ico"> -->
 
-Hello, Admin
+    <title>Admin</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="/static/glyphicons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/sticky-footer.css" rel="stylesheet">
+
+    <style type="text/css">
+      table.collapse.show {
+        display: table;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Begin page content -->
+    <div class="container-fluid">
+      <main role="main" class="container-fluid">
+        <div class="mt-1">
+          <h1>Web Programming Assignment</h1>
+          <h2>Admin interface</h2>
+        </div>
+        <p class="lead">View and edit venues and their events</p>
+
+        <br>
+
+        <h3>Venues</h3>
+        
+        <table class="table collapse table-hover" id="venuesTable">
+          <thead>
+            <tr>
+              <th>Nº</th>
+              <th>Name</th>
+              <th>Postcode</th>
+              <th>Town</th>
+              <th>URL</th>
+              <th>Icon</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+
+        <div class="modal fade" id="venueModal" tabindex="-1" role="dialog" aria-labelledby="venueModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              	Just a modal
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Alex Stuckey, Michaelmas 2017</span>
+      </div>
+    </footer>
+    
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script src="/static/moment.min.js"></script>
+    <script src="/static/popper.min.js"></script>
+    <script src="/static/bootstrap.bundle.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+      $(function () {
+        $('#datetimepicker1').datetimepicker({
+          format: 'DD/MM/YYYY'
+        })
+
+        // Perform AJAX to populate venues table
+          $.ajax({
+            url: '/events2017/venues',
+            method: 'GET'
+          }).done((data, textStatus, jqXHR) => {
+            // Erase previous table, if exists
+            $("#venuesTable").find("tr:gt(0)").remove()
+
+            // Populate table
+            let venues = Object.keys(data.venues).map( (key) => {
+            	let tmpVenue = data.venues[key]
+            	tmpVenue.venue_id = key
+            	return tmpVenue
+            } )
+
+            venues.forEach( addVenuesRow )
+
+            // Show table
+            $('#venuesTable').collapse('show')
+          }).fail((jqXHR, textStatus) => {
+            // ERROR
+            alert('error')
+          });
+
+    })
+
+      let addVenuesRow = (venue) => {
+        $('<tr data-toggle="modal" data-target="#venueModal"> <th>'+ venue.venue_id.substring(2) + '</th> <td>' + venue.name + '</td> <td>' + venue.postcode + '</td> <td>' + venue.town + '</td> <td>' + venue.url + '</td> <td>' + venue.icon + '</td> <td>' + '</td> </tr>').appendTo('#venuesTable tbody').data('venueObj', venue)
+      }
+
+      let addEventsRow = (event) => {
+        $('<tr data-toggle="modal" data-target="#eventModal"> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title +'</td> <td>'+ moment(event.date).format('LLL') +'</td> <td>'+ event.venue.name +'</td> </tr>').appendTo('#eventsTable tbody').data('eventObj', event)
+      }
+
+      $('#venueModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var venueObj = button.data('venueObj') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(venueObj.name)
+      })
+    </script>
+
+  </body>
 </html>
