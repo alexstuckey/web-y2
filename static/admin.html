@@ -80,6 +80,29 @@
                   </tbody>
                 </table>
               </div>
+              <div class="col-12">
+                <h5>Add new event</h5>
+                <form>
+                  <div class="form-group">
+                    <label for="inputEventTitle">Title</label>
+                    <input type="text" class="form-control" id="inputEventTitle" placeholder="Enter title">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEventBlurb">Blurb</label>
+                    <textarea class="form-control" id="inputEventBlurb" rows="3" placeholder="Enter some blurb about the event"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEventDate">Date</label>
+                    <div id="inputEventDate"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEventURL">URL</label>
+                    <input type="text" class="form-control" id="inputEventURL" placeholder="Enter URL">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Add event</button>
+                </form>
+                <br>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
@@ -105,6 +128,11 @@
 
     <script type="text/javascript">
       $(function () {
+        $('#inputEventDate').datetimepicker({
+            inline: true,
+            sideBySide: true
+          })
+
         // Perform AJAX to populate venues table
           $.ajax({
             url: '/events2017/venues',
