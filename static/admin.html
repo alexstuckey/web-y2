@@ -100,6 +100,7 @@
                     <input type="text" class="form-control" id="inputEventURL" placeholder="Enter URL">
                   </div>
                   <input type="hidden" class="form-control" id="inputEventVenueID">
+                  <button type="button" class="btn btn-primary" id="submitAddEvent">Add event</button>
                 </form>
                 <br>
               </div>
@@ -157,6 +158,36 @@
             alert('error')
           });
 
+
+          $('#submitAddEvent').click(() => {
+            let date = ''
+            if ($('#inputEventDate').data("DateTimePicker").date()) {
+              date = $('#inputEventDate').data("DateTimePicker").date().seconds(0).milliseconds(0).toISOString().replace('00.000', '00')
+            }
+            console.log(date)
+
+            // Perform AJAX
+            $.ajax({
+              url: '/events2017/events/add',
+              method: 'POST',
+              data: {
+                title: $('#inputEventTitle').val(),
+                blurb: $('#inputEventBlurb').val(),
+                date: date,
+                url: $('#inputEventURL').val(),
+                venue_id: $('#inputEventVenueID').val()
+              }
+            }).done((data, textStatus, jqXHR) => {
+              console.log(date)
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert('error')
+              console.log(jqXHR)
+            });
+
+
+          })
+
     })
 
       let addVenuesRow = (venue) => {
@@ -174,6 +205,7 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(venueObj.name)
+        modal.find('#inputEventVenueID').val(venueObj.venue_id.substring(2))
 
         // Fetch all events, then filter down
         $.ajax({
@@ -190,8 +222,7 @@
 
             events.forEach( addVenueEventsRow )
 
-            // Show table
-            // $('#venueEventsTable').collapse('show')
+            // date
           }).fail((jqXHR, textStatus) => {
             // ERROR
             alert('error')
