@@ -65,7 +65,20 @@
                 </button>
               </div>
               <div class="modal-body">
-              	Just a modal
+                <table class="table table-hover" id="venueEventsTable">
+                  <thead>
+                    <tr>
+                      <th>Nº</th>
+                      <th>Title</th>
+                      <th>Blurb</th>
+                      <th>Date</th>
+                      <th>URL</th>
+                      <th>venue_id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -106,9 +119,9 @@
 
             // Populate table
             let venues = Object.keys(data.venues).map( (key) => {
-            	let tmpVenue = data.venues[key]
-            	tmpVenue.venue_id = key
-            	return tmpVenue
+              let tmpVenue = data.venues[key]
+              tmpVenue.venue_id = key
+              return tmpVenue
             } )
 
             venues.forEach( addVenuesRow )
@@ -126,8 +139,8 @@
         $('<tr data-toggle="modal" data-target="#venueModal"> <th>'+ venue.venue_id.substring(2) + '</th> <td>' + venue.name + '</td> <td>' + venue.postcode + '</td> <td>' + venue.town + '</td> <td>' + venue.url + '</td> <td>' + venue.icon + '</td> <td>' + '</td> </tr>').appendTo('#venuesTable tbody').data('venueObj', venue)
       }
 
-      let addEventsRow = (event) => {
-        $('<tr data-toggle="modal" data-target="#eventModal"> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title +'</td> <td>'+ moment(event.date).format('LLL') +'</td> <td>'+ event.venue.name +'</td> </tr>').appendTo('#eventsTable tbody').data('eventObj', event)
+      let addVenueEventsRow = (event) => {
+        $('<tr> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title + '</td> <td>' + event.blurb + '</td> <td>' + moment(event.date).format('LLL') +'</td> <td>' + event.url + '</td> <td>' + event.venue.venue_id.substring(2) +'</td> </tr>').appendTo('#venueEventsTable tbody').data('eventObj', event)
       }
 
       $('#venueModal').on('show.bs.modal', function (event) {
@@ -137,6 +150,29 @@
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(venueObj.name)
+
+        // Fetch all events, then filter down
+        $.ajax({
+            url: '/events2017/events/search',
+            method: 'GET'
+          }).done((data, textStatus, jqXHR) => {
+            // Erase previous table, if exists
+            $("#venueEventsTable").find("tr:gt(0)").remove()
+
+            // Populate table
+            let events = data.events.filter( (event) => {
+              return (event.venue.venue_id == venueObj.venue_id)
+            } )
+
+            events.forEach( addVenueEventsRow )
+
+            // Show table
+            // $('#venueEventsTable').collapse('show')
+          }).fail((jqXHR, textStatus) => {
+            // ERROR
+            alert('error')
+          });
+
       })
     </script>
 
