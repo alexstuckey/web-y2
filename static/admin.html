@@ -38,21 +38,22 @@
         <br>
 
         <h3>Venues</h3>
-        
-        <table class="table collapse table-hover" id="venuesTable">
-          <thead>
-            <tr>
-              <th>Nº</th>
-              <th>Name</th>
-              <th>Postcode</th>
-              <th>Town</th>
-              <th>URL</th>
-              <th>Icon</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table collapse table-hover" id="venuesTable">
+            <thead>
+              <tr>
+                <th>Nº</th>
+                <th>Name</th>
+                <th>Postcode</th>
+                <th>Town</th>
+                <th>URL</th>
+                <th>Icon</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
 
 
         <div class="modal fade" id="venueModal" tabindex="-1" role="dialog" aria-labelledby="venueModalLabel" aria-hidden="true">
@@ -65,20 +66,22 @@
                 </button>
               </div>
               <div class="modal-body">
-                <table class="table table-hover" id="venueEventsTable">
-                  <thead>
-                    <tr>
-                      <th>Nº</th>
-                      <th>Title</th>
-                      <th>Blurb</th>
-                      <th>Date</th>
-                      <th>URL</th>
-                      <th>venue_id</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-hover" id="venueEventsTable">
+                    <thead>
+                      <tr>
+                        <th>Nº</th>
+                        <th>Title</th>
+                        <th>Blurb</th>
+                        <th>Date</th>
+                        <th>URL</th>
+                        <th>venue_id</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div class="col-12">
                 <h5>Add new event</h5>
