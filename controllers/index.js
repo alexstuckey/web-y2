@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const config = require('../config.js');
+const crypto = require('crypto')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -275,6 +276,35 @@ app.get(config.baseURLPath + '/index.html', (req, res) => {
 
 app.get(config.baseURLPath + '/admin.html', (req, res) => {
   res.sendFile('admin.html', {root: './static'});
+})
+
+app.post(config.baseURLPath + '/auth', function (req, res) {
+  // username and password, then combines it with IP address
+  // returns an auth_token
+
+  if (!req.body.username || !req.body.password) {
+    res.status(400)
+    res.send(JSON.stringify({"error": "missing required input parameters"}))
+    return
+  } else {
+    // Record the time
+    let createTime = new Date().toISOString()
+
+    // Generate token
+    let auth_token = crypto.randomBytes(20).toString('hex');
+
+    // Insert into database
+    db.run('INSERT INTO Auth (auth_token, authUsername, authIP, authDatetime) VALUES (?, ?, ?, ?)', auth_token, req.body.username, req.ip, createTime, (err) => {
+      if (err) {
+        return console.log(err.message)
+      }
+      console.log(`An auth_token (${auth_token}) has been inserted with username ${req.body.username} and IP ${req.ip}`);
+      
+      // Return the auth_token via HTTP
+      res.send(JSON.stringify({"auth_token": auth_token}))
+    })
+  }
+
 })
 
 let server = app.listen(config.expressPort, function () {
