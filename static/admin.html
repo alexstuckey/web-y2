@@ -207,6 +207,11 @@
         modal.find('.modal-title').text(venueObj.name)
         modal.find('#inputEventVenueID').val(venueObj.venue_id.substring(2))
 
+        modal.find('#inputEventTitle').val('')
+        modal.find('#inputEventBlurb').val('')
+        modal.find('#inputEventDate').val('')
+        modal.find('#inputEventURL').val('')
+
         // Fetch all events, then filter down
         $.ajax({
             url: '/events2017/events/search',
