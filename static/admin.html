@@ -210,13 +210,31 @@
                 venue_id: $('#inputEventVenueID').val()
               }
             }).done((data, textStatus, jqXHR) => {
-              console.log(date)
+
             }).fail((jqXHR, textStatus) => {
               // ERROR
               alert(jqXHR.responseText)
             });
+          })
 
-
+          $('#submitAddVenue').click(() => {
+            // Perform AJAX
+            $.ajax({
+              url: '/events2017/venues/add',
+              method: 'POST',
+              data: {
+                name: $('#inputVenueName').val(),
+                postcode: $('#inputVenuePostcode').val(),
+                town: $('#inputVenueTown').val(),
+                url: $('#inputVenueURL').val(),
+                icon: $('#inputVenueIcon').val()
+              }
+            }).done((data, textStatus, jqXHR) => {
+              // Trigger a reload of the table
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert(jqXHR.responseText)
+            });
           })
 
     })
