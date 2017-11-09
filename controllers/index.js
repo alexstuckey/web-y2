@@ -206,7 +206,7 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
 
 app.post(config.baseURLPath + '/events/add', function (req, res) {
   console.log(req.body)
-  if (isAuthenticated()) {
+  whenAuthenticated(req.body.auth_token, req.ip, () => {
     // Validate all the input:
     //   REQUIRED: (id) title, venue_id, date
     //   OPTIOANL: url, blurb
@@ -250,11 +250,11 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
 
     }
 
-  } else {
+  }, () => {
     res.status(400)
     res.send(JSON.stringify({"error": "not authorised, wrong token"}))
     return
-  }
+  })
 
 })
 
