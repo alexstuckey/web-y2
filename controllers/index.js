@@ -330,10 +330,15 @@ app.post(config.baseURLPath + '/auth', function (req, res) {
 })
 
 app.get(config.baseURLPath + '/auth', function (req, res) {
-  if ( isAuthenticated(req.params.auth_token, req.ip) ) {
-    res.send(JSON.stringify({"authenticated": true}))
+  if (!req.query.auth_token) {
+    res.send(JSON.stringify({"authenticated": true,
+                             "error": "no supplied auth_token"}))
   } else {
-    res.send(JSON.stringify({"authenticated": false}))
+    whenAuthenticated(req.query.auth_token, req.ip, () => {
+      res.send(JSON.stringify({"authenticated": true}))
+    }, () => {
+      res.send(JSON.stringify({"authenticated": false}))
+    })
   }
 })
 
