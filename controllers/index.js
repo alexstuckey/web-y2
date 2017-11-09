@@ -10,8 +10,30 @@ var sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database(config.databasePath)
 
 
-let isAuthenticated = () => {
-  return true
+let whenAuthenticated = (auth_token, ip, success, failure) => {
+  db.all('SELECT * FROM Auth WHERE auth_token=?', auth_token, (err, rows) => {
+    if (rows.length >= 1) {
+      console.log(rows)
+      if ( rows[0].authIP == ip ) {
+        let dbDate = new Date(rows[0].authDatetime)
+        dbDate.setHours( dbDate.getHours() + 2 )
+        let now = new Date()
+        if ( dbDate > now ) {
+          //success
+          success()
+        } else {
+          console.log("  auth_token has expired")
+          failure()
+        }
+      } else {
+        console.log("  IP address does not match auth_token")
+        failure()
+      }
+    } else {
+      console.log("  auth_token not found in DB")
+      failure()
+    }
+  })
 }
 
 
