@@ -143,8 +143,8 @@ app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
   // Check for integer input
-  if (req.params['event_id'] % 1 === 0) {
-    db.all('SELECT * FROM Events WHERE eventID=?', req.params['event_id'], (err, rows) => {
+  if (req.params.event_id % 1 === 0) {
+    db.all('SELECT * FROM Events WHERE eventID=?', req.params.event_id, (err, rows) => {
       if (rows.length >= 1) {
         res.send(JSON.stringify(rows[0]))
       } else {
