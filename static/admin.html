@@ -209,8 +209,7 @@
               console.log(date)
             }).fail((jqXHR, textStatus) => {
               // ERROR
-              alert('error')
-              console.log(jqXHR)
+              alert(jqXHR.responseText)
             });
 
 
