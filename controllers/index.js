@@ -307,6 +307,14 @@ app.post(config.baseURLPath + '/auth', function (req, res) {
 
 })
 
+app.get(config.baseURLPath + '/auth', function (req, res) {
+  if ( isAuthenticated(req.params.auth_token, req.ip) ) {
+    res.send(JSON.stringify({"authenticated": true}))
+  } else {
+    res.send(JSON.stringify({"authenticated": false}))
+  }
+})
+
 let server = app.listen(config.expressPort, function () {
   console.log('Example app listening on port 3000!')
   // server.close(() => {
