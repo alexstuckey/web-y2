@@ -193,7 +193,6 @@
             if ($('#inputEventDate').data("DateTimePicker").date()) {
               date = $('#inputEventDate').data("DateTimePicker").date().seconds(0).milliseconds(0).toISOString().replace('00.000', '00')
             }
-            console.log(date)
 
             // Perform AJAX
             $.ajax({
