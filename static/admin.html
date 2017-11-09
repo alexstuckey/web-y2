@@ -168,29 +168,7 @@
           })
 
         // Perform AJAX to populate venues table
-          $.ajax({
-            url: '/events2017/venues',
-            method: 'GET'
-          }).done((data, textStatus, jqXHR) => {
-            // Erase previous table, if exists
-            $("#venuesTable").find("tr:gt(0)").remove()
-
-            // Populate table
-            let venues = Object.keys(data.venues).map( (key) => {
-              let tmpVenue = data.venues[key]
-              tmpVenue.venue_id = key
-              return tmpVenue
-            } )
-
-            venues.forEach( addVenuesRow )
-
-            // Show table
-            $('#venuesTable').collapse('show')
-          }).fail((jqXHR, textStatus) => {
-            // ERROR
-            alert('error')
-          });
-
+        loadVenuesTable()
 
           $('#submitAddEvent').click(() => {
             let date = ''
@@ -231,6 +209,7 @@
               }
             }).done((data, textStatus, jqXHR) => {
               // Trigger a reload of the table
+              loadVenuesTable()
             }).fail((jqXHR, textStatus) => {
               // ERROR
               alert(jqXHR.responseText)
@@ -245,6 +224,31 @@
 
       let addVenueEventsRow = (event) => {
         $('<tr> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title + '</td> <td>' + event.blurb + '</td> <td>' + moment(event.date).format('LLL') +'</td> <td>' + event.url + '</td> <td>' + event.venue.venue_id.substring(2) +'</td> </tr>').appendTo('#venueEventsTable tbody').data('eventObj', event)
+      }
+
+      let loadVenuesTable = () => {
+        $.ajax({
+          url: '/events2017/venues',
+          method: 'GET'
+        }).done((data, textStatus, jqXHR) => {
+          // Erase previous table, if exists
+          $("#venuesTable").find("tr:gt(0)").remove()
+
+          // Populate table
+          let venues = Object.keys(data.venues).map( (key) => {
+            let tmpVenue = data.venues[key]
+            tmpVenue.venue_id = key
+            return tmpVenue
+          } )
+
+          venues.forEach( addVenuesRow )
+
+          // Show table
+          $('#venuesTable').collapse('show')
+        }).fail((jqXHR, textStatus) => {
+          // ERROR
+          alert('error')
+        });
       }
 
       $('#venueModal').on('show.bs.modal', function (event) {
