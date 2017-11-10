@@ -102,6 +102,30 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     }
   }
 
+  let applySingleDate = () => {
+    // EXTERNAL CODE
+    // Code from: https://stackoverflow.com/a/46362201/298051
+    re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    // END EXTERNAL CODE
+
+    if (re.test(req.query.date)) {
+      let dateDate = new Date(req.query.date)
+
+      queryFilters.push((event) => {
+        let eventDate = new Date(event.date)
+        return (eventDate == dateDate)
+      })
+
+    } else {
+      // Not valid date
+      console.log('  ERROR not a valid date')
+      sendError = {
+          code: 400,
+          string: "not a valid date"
+        }
+    }
+  }
+
   console.log('GET BASE/events/search', req.query)
   if (req.query.search && req.query.fromDate && req.query.toDate) {
     console.log('  queried Search & Dates')
