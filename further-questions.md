@@ -9,3 +9,4 @@
       or are we meant to create a bootstrapping script for you to be able to build it from scratch?
 - [ ] For `auth_token`, are we allowed to use JWTs?
 - [ ] For POST `events/add`: should `venue_id` be an integer, or a string of form 'v_1'?
+- [ ] Is it acceptable to go further and support searching for date ranges? Since in the document it was mentioned that the `index.html` page may allows the user to search for "and/or dates"?
