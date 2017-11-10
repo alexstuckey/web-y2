@@ -67,7 +67,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     })
   }
 
-  let applyDate = () => {
+  let applyDates = () => {
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
     re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
@@ -104,18 +104,27 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
 
   console.log('GET BASE/events/search', req.query)
   if (req.query.search && req.query.fromDate && req.query.toDate) {
-    console.log('  queried Search & Date')
+    console.log('  queried Search & Dates')
     applySearch()
-    applyDate()
+    applyDates()
 
   } else if (req.query.search) {
     console.log('  queried Search')
     applySearch()
 
   } else if (req.query.fromDate && req.query.toDate) {
-    console.log('  queried Date')
-    applyDate()
+    console.log('  queried Dates')
+    applyDates()
     
+  } else if (req.query.date) {
+    console.log('  queried single Date')
+    applySingleDate()
+
+  } else if (eq.query.date && eq.query.search) {
+    console.log('  queried single Date')
+    applySearch()
+    applySingleDate()
+
   } else {
     console.log('  no params, return all')
 
