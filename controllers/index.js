@@ -333,7 +333,20 @@ app.get(config.baseURLPath + '/index.html', (req, res) => {
 })
 
 app.get(config.baseURLPath + '/admin.html', (req, res) => {
-  res.sendFile('admin.html', {root: './static'});
+
+  if (req.headers.cookie) {
+    // Extracts auth_token
+    whenAuthenticated(req.headers.cookie.split('=')[1], req.ip, () => {
+      res.sendFile('admin.html', {root: './static'})
+    }, () => {
+      res.sendFile('login.html', {root: './static'})
+    })
+  } else {
+    res.sendFile('login.html', {root: './static'})
+  }
+
+})
+
 app.post(config.baseURLPath + '/admin.html', (req, res) => {
   // Check req.body.username and .password
   db.all('SELECT * FROM Auth WHERE authUsername=? AND authPassword=?', req.body.username, req.body.password, (err, rows) => {
