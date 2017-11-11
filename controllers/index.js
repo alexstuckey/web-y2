@@ -352,7 +352,7 @@ app.post(config.baseURLPath + '/auth', function (req, res) {
     let auth_token = crypto.randomBytes(20).toString('hex');
 
     // Insert into database
-    db.run('INSERT INTO Auth (auth_token, authUsername, authIP, authDatetime) VALUES (?, ?, ?, ?)', auth_token, req.body.username, req.ip, createTime, (err) => {
+    db.run('INSERT INTO Auth (auth_token, authUsername, authPassword, authIP, authDatetime) VALUES (?, ?, ?, ?, ?)', auth_token, req.body.username, req.body.password, req.ip, createTime, (err) => {
       if (err) {
         return console.log(err.message)
       }
