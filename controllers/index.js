@@ -242,7 +242,6 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/events/add', function (req, res) {
-  console.log(req.body)
   whenAuthenticated(req.body.auth_token, req.ip, () => {
     // Validate all the input:
     //   REQUIRED: (id) title, venue_id, date
