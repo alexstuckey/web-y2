@@ -334,6 +334,20 @@ app.get(config.baseURLPath + '/index.html', (req, res) => {
 
 app.get(config.baseURLPath + '/admin.html', (req, res) => {
   res.sendFile('admin.html', {root: './static'});
+app.post(config.baseURLPath + '/admin.html', (req, res) => {
+  // Check req.body.username and .password
+  db.all('SELECT * FROM Auth WHERE authUsername=? AND authPassword=?', req.body.username, req.body.password, (err, rows) => {
+    if (rows.length >= 1) {
+      // Set auth_token cookie
+      res.cookie('auth_token', rows[0].auth_token)
+
+      // Send page
+      res.sendFile('admin.html', {root: './static'})
+    } else {
+      console.log("  invalid user & pass")
+      res.sendFile('login.html', {root: './static'})
+    }
+  })
 })
 
 app.post(config.baseURLPath + '/auth', function (req, res) {
