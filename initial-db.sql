@@ -21,6 +21,7 @@ CREATE TABLE Venues (
 CREATE TABLE Auth (
   auth_token       TEXT      PRIMARY KEY,
   authUsername     TEXT      NOT NULL,
+  authPassword     TEXT      NOT NULL,
   authIP           TEXT      NOT NULL,
   authDatetime     TEXT      NOT NULL
 );
