@@ -293,7 +293,7 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
 
-  if (isAuthenticated()) {
+  whenAuthenticated(req.body.auth_token, req.ip, () => {
     // Validate all the input:
     //   REQUIRED: name
     //   OPTIOANL: postcode, town, url, icon
@@ -315,11 +315,11 @@ app.post(config.baseURLPath + '/venues/add', function (req, res) {
       })
     }
 
-  } else {
+  }, () => {
     res.status(400)
     res.send(JSON.stringify({"error": "not authorised, wrong token"}))
     return
-  }
+  })
   
 })
 
