@@ -2,13 +2,13 @@ const express = require('express')
 const app = express()
 const config = require('../config.js');
 const crypto = require('crypto')
+const fs = require('fs')
+const setupDB = require('../setup-db.js')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database(config.databasePath)
-
+let db
 
 let whenAuthenticated = (auth_token, ip, success, failure) => {
   if ( auth_token == 'concertina' && ip.startsWith('129.234') ) {
@@ -406,8 +406,16 @@ app.get(config.baseURLPath + '/auth', function (req, res) {
 })
 
 let server = app.listen(config.expressPort, function () {
+  // Check if database exists
+  if (fs.existsSync(config.databasePath)) {
+    var sqlite3 = require('sqlite3').verbose()
+    db = new sqlite3.Database(config.databasePath)
+  } else {
+    setupDB.createDatabase()
+    var sqlite3 = require('sqlite3').verbose()
+    db = new sqlite3.Database(config.databasePath)
+  }
+
   console.log('Example app listening on port 3000!')
-  // server.close(() => {
-  //   console.log('Doh :(')
-  // })
+
 })
