@@ -110,6 +110,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
     re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    // re = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
     // END EXTERNAL CODE
 
     if (re.test(req.query.date)) {
@@ -117,6 +118,7 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
 
       queryFilters.push((event) => {
         let eventDate = new Date(event.date)
+        console.log(eventDate, dateDate)
         return (eventDate == dateDate)
       })
 
@@ -201,9 +203,19 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
 app.get(config.baseURLPath + '/events/get/:event_id', function (req, res) {
   res.setHeader('Content-Type', 'application/json')
 
+  let e_id
+
+  if (req.params.event_id.startsWith('e_')) {
+    e_id = req.params.event_id.substring(2)
+  } else {
+    e_id = req.params.event_id
+  }
+
+
+
   // Check for integer input
-  if (req.params.event_id % 1 === 0) {
-    db.all('SELECT * FROM Events WHERE eventID=?', req.params.event_id, (err, rows) => {
+  if (e_id % 1 === 0) {
+    db.all('SELECT * FROM Events WHERE eventID=?', e_id, (err, rows) => {
       if (rows.length >= 1) {
         res.send(JSON.stringify(rows[0]))
       } else {
