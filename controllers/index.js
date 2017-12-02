@@ -417,6 +417,6 @@ let server = app.listen(config.expressPort, function () {
     db = new sqlite3.Database(config.databasePath)
   }
 
-  console.log('Example app listening on port 3000!')
+  console.log(`Example app listening on port ${config.expressPort}!`)
 
 })
