@@ -10,6 +10,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 let db
 
+let sameDay = (d1, d2) => {
+  // EXTERNAL CODE
+  // Code from: https://stackoverflow.com/a/43855221/
+  return d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate();
+  // END EXTERNAL CODE
+}
+
 let whenAuthenticated = (auth_token, ip, success, failure) => {
   if ( auth_token == 'concertina' && ip.startsWith('129.234') ) {
     success()
