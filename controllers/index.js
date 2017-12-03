@@ -126,8 +126,9 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
 
       queryFilters.push((event) => {
         let eventDate = new Date(event.date)
-        console.log(eventDate, dateDate)
-        return (eventDate == dateDate)
+        
+        // return (eventDate == dateDate)
+        return sameDay(eventDate, dateDate)
       })
 
     } else {
