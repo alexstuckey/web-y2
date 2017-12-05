@@ -83,10 +83,11 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   let applyDates = () => {
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
-    re = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    reShort = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    reLong = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
     // END EXTERNAL CODE
 
-    if (re.test(req.query.fromDate) && re.test(req.query.toDate)) {
+    if ((reShort.test(req.query.fromDate) && reShort.test(req.query.toDate)) || (reLong.test(req.query.fromDate) && reLong.test(req.query.toDate)) ) {
       let dateFromDate = new Date(req.query.fromDate)
       let dateToDate = new Date(req.query.toDate)
 
@@ -118,10 +119,11 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
   let applySingleDate = () => {
     // EXTERNAL CODE
     // Code from: https://stackoverflow.com/a/46362201/298051
-    re = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
+    reShort = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    reLong = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
     // END EXTERNAL CODE
 
-    if (re.test(req.query.date)) {
+    if (reLong.test(req.query.date) || reShort.test(req.query.date)) {
       let dateDate = new Date(req.query.date)
 
       queryFilters.push((event) => {
