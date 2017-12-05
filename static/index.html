@@ -52,7 +52,7 @@
                     <span class="glyphicon glyphicon-calendar"></span>
                   </span>
                 </div>
-                <small id="dateHelp" class="form-text text-muted">Within with range</small>
+                <small id="dateHelp" class="form-text text-muted">Search for either a single date, or a within with a date range.</small>
               </div>
             </div>
             <div class='col-md-6'>
@@ -177,28 +177,60 @@
             toDate = $('#datetimepicker2').data("DateTimePicker").date().add(6, 'h').toISOString().substring(0,10)
           }
 
-          // Perform AJAX
-          $.ajax({
-            url: '/events2017/events/search',
-            method: 'GET',
-            data: {
-              search: $('#inputKeywords').val(),
-              fromDate: fromDate,
-              toDate: toDate
-            }
-          }).done((data, textStatus, jqXHR) => {
-            // Erase previous table, if exists
-            $("#eventsTable").find("tr:gt(0)").remove()
+          console.log(fromDate, toDate)
 
-            // Populate table
-            data.events.forEach( addRow )
+          if (toDate == '') {
+            // then single date search
 
-            // Show table
-            $('#eventsTable').collapse('show')
-          }).fail((jqXHR, textStatus) => {
-            // ERROR
-            alert('error')
-          });
+            // Perform AJAX
+            $.ajax({
+              url: '/events2017/events/search',
+              method: 'GET',
+              data: {
+                search: $('#inputKeywords').val(),
+                date: fromDate,
+              }
+            }).done((data, textStatus, jqXHR) => {
+              // Erase previous table, if exists
+              $("#eventsTable").find("tr:gt(0)").remove()
+
+              // Populate table
+              data.events.forEach( addRow )
+
+              // Show table
+              $('#eventsTable').collapse('show')
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert('error')
+            });
+          } else {
+            // range date search
+
+            // Perform AJAX
+            $.ajax({
+              url: '/events2017/events/search',
+              method: 'GET',
+              data: {
+                search: $('#inputKeywords').val(),
+                fromDate: fromDate,
+                toDate: toDate
+              }
+            }).done((data, textStatus, jqXHR) => {
+              // Erase previous table, if exists
+              $("#eventsTable").find("tr:gt(0)").remove()
+
+              // Populate table
+              data.events.forEach( addRow )
+
+              // Show table
+              $('#eventsTable').collapse('show')
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert('error')
+            });
+          }
+
+          
 
 
         })
