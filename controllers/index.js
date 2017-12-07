@@ -436,6 +436,39 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
   // Method for routing client requests to the Eventful API
   // http://api.eventful.com/
 
+  let parameters =  {
+    app_key: config.eventfulKey,
+    location: "Durham, United Kingdom",
+    date: "Future"
+  }
+
+  if (req.query.date) {
+    // single date
+
+    let dateDate = new Date(req.query.date)
+
+    let firstHalf = dateDate.toISOString().slice(0,10).replace(/-/g,"") + '00'
+    dateDate.setDate(dateDate.getDate() + 1)
+    let secondHalf = dateDate.toISOString().slice(0,10).replace(/-/g,"") + '00'
+    let combined = firstHalf + '-' + secondHalf
+    console.log(combined)
+
+    parameters.date = combined
+
+  } else {
+    // date range
+    
+    let dateFromDate = new Date(req.query.fromDate)
+    let dateToDate = new Date(req.query.toDate)
+
+    let firstHalf = dateFromDate.toISOString().slice(0,10).replace(/-/g,"") + '00'
+    let secondHalf = dateTODate.toISOString().slice(0,10).replace(/-/g,"") + '00'
+    let combined = firstHalf + '-' + secondHalf
+    console.log(combined)
+
+    parameters.date = combined
+  }
+
   request.get({
     url: "http://api.eventful.com/rest/events/search",
     qs: {
