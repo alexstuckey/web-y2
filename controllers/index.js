@@ -479,6 +479,8 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
   }, (error, response, body) => {
       if (error) {
         console.error('eventful request failed:', error);
+        res.status(400)
+        res.send(JSON.stringify({"error": "eventful request failed"}))
       } else {
         parseXMLString(body, (err, result) => {
           if (err) {
