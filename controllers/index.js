@@ -3,6 +3,7 @@ const app = express()
 const config = require('../config.js')
 const crypto = require('crypto')
 const fs = require('fs')
+const parseXMLString = require('xml2js').parseString
 const setupDB = require('../setup-db.js')
 
 const bodyParser = require('body-parser')
