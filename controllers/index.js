@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const config = require('../config.js');
+const config = require('../config.js')
 const crypto = require('crypto')
 const fs = require('fs')
 const setupDB = require('../setup-db.js')
