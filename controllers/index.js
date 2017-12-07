@@ -432,6 +432,33 @@ app.get(config.baseURLPath + '/auth', function (req, res) {
   }
 })
 
+app.get(config.baseURLPath + '/externalevents', function (req, res) {
+  // Method for routing client requests to the Eventful API
+  // http://api.eventful.com/
+
+  request.get({
+    url: "http://api.eventful.com/rest/events/search",
+    qs: {
+      app_key: config.eventfulKey,
+      location: "Durham, United Kingdom",
+      date: "Future"
+    }
+  }, (error, response, body) => {
+      if (error) {
+        console.error('eventful request failed:', error);
+      } else {
+        parseXMLString(body, (err, result) => {
+          if (err) {
+            return console.error('xml parsing error:', err)
+          } else {
+            res.setHeader('Content-Type', 'application/json')
+            res.send(JSON.stringify(result))
+          }
+        })
+      }
+    })
+})
+
 let server = app.listen(config.expressPort, function () {
   // Check if database exists
   if (fs.existsSync(config.databasePath)) {
