@@ -488,6 +488,7 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
           } else {
             res.setHeader('Content-Type', 'application/json')
             res.send(JSON.stringify(result))
+            console.log('  returned external events')
           }
         })
       }
