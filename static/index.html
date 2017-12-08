@@ -240,6 +240,10 @@
         $('<tr data-toggle="modal" data-target="#eventModal"> <th>'+ event.event_id.substring(2) +'</th> <td>'+ event.title +'</td> <td>'+ moment(event.date).format('LLL') +'</td> <td>'+ event.venue.name +'</td> </tr>').appendTo('#eventsTable tbody').data('eventObj', event)
       }
 
+      let addRowExternal = (event) => {
+        $('<tr> <td>'+ event.title +'</td> <td>'+ moment(event.start_time).format('LLL') +'</td> <td>'+ event.venue_name +'</td> </tr>').appendTo('#eventsTableExternal tbody').data('eventObj', event)
+      }
+
       $('#eventModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var eventObj = button.data('eventObj') // Extract info from data-* attributes
