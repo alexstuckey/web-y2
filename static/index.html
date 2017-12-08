@@ -217,6 +217,27 @@
               // ERROR
               alert('error: get events internal (single)')
             })
+
+            $.ajax({
+              url: '/events2017/externalevents',
+              method: 'GET',
+              data: {
+                date: fromDate,
+              }
+            }).done((data, textStatus, jqXHR) => {
+              // Erase previous table, if exists
+              $("#eventsTableExternal").find("tr:gt(0)").remove()
+
+              // Populate table
+              data.search.events[0].event.forEach( addRowExternal )
+
+              // Show table & header
+              $('#eventsTableExternal').collapse('show')
+              $('#eventsTableExternalHeader').collapse('show')
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert('error: get events external (single)')
+            })
           } else {
             // range date search
 
@@ -241,6 +262,28 @@
             }).fail((jqXHR, textStatus) => {
               // ERROR
               alert('error: get events internal (range)')
+            })
+
+            $.ajax({
+              url: '/events2017/externalevents',
+              method: 'GET',
+              data: {
+                fromDate: fromDate,
+                toDate: toDate
+              }
+            }).done((data, textStatus, jqXHR) => {
+              // Erase previous table, if exists
+              $("#eventsTableExternal").find("tr:gt(0)").remove()
+
+              // Populate table
+              data.search.events[0].event.forEach( addRowExternal )
+
+              // Show table & header
+              $('#eventsTableExternal').collapse('show')
+              $('#eventsTableExternalHeader').collapse('show')
+            }).fail((jqXHR, textStatus) => {
+              // ERROR
+              alert('error: get events external (range)')
             })
           }
 
