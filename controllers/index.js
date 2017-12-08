@@ -471,11 +471,7 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
 
   request.get({
     url: "http://api.eventful.com/rest/events/search",
-    qs: {
-      app_key: config.eventfulKey,
-      location: "Durham, United Kingdom",
-      date: "Future"
-    }
+    qs: parameters
   }, (error, response, body) => {
       if (error) {
         console.error('eventful request failed:', error);
