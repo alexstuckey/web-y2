@@ -191,6 +191,11 @@
         })
 
         $('#submitSearch').click(() => {
+          if ($('#datetimepicker1').data("DateTimePicker").date()===null && $('#datetimepicker1').data("DateTimePicker").date()===null) {
+            alert("No date(s) entered.")
+            return
+          }
+
           let fromDate = ''
           if ($('#datetimepicker1').data("DateTimePicker").date()) {
             fromDate = $('#datetimepicker1').data("DateTimePicker").date().add(6, 'h').toISOString().substring(0,10)
