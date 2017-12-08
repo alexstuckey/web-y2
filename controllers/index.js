@@ -462,7 +462,7 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
     let dateToDate = new Date(req.query.toDate)
 
     let firstHalf = dateFromDate.toISOString().slice(0,10).replace(/-/g,"") + '00'
-    let secondHalf = dateTODate.toISOString().slice(0,10).replace(/-/g,"") + '00'
+    let secondHalf = dateToDate.toISOString().slice(0,10).replace(/-/g,"") + '00'
     let combined = firstHalf + '-' + secondHalf
     console.log(combined)
 
