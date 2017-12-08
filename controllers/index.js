@@ -455,7 +455,7 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
 
     parameters.date = combined
 
-  } else if (req.query.fromDate && req.query.fromDate) {
+  } else if (req.query.fromDate && req.query.toDate) {
     // date range
     
     let dateFromDate = new Date(req.query.fromDate)
