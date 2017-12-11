@@ -56,7 +56,7 @@ $(function () {
         alert('error: get events internal (single)')
       })
 
-      if ($('#externalEventsCheckbox').attr('checked', true)) {
+      if ($('#externalEventsCheckbox').prop('checked')===true) {
         $.ajax({
           url: '/events2017/externalevents',
           method: 'GET',
@@ -104,7 +104,7 @@ $(function () {
         alert('error: get events internal (range)')
       })
 
-      if ($('#externalEventsCheckbox').attr('checked', true)) {
+      if ($('#externalEventsCheckbox').prop('checked')===true) {
         $.ajax({
           url: '/events2017/externalevents',
           method: 'GET',
