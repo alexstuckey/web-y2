@@ -129,6 +129,12 @@ $(function () {
       }
     }
 
+    if ($('#externalEventsCheckbox').prop('checked')===false) {
+      // Show table & header
+      $('#eventsTableExternal').collapse('hide')
+      $('#eventsTableExternalHeader').collapse('hide')
+    }
+
     
 
 
