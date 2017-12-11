@@ -152,6 +152,11 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     applySearch()
     applyDates()
 
+  } else if (req.query.date && req.query.search) {
+    console.log('  queried single Date and search')
+    applySearch()
+    applySingleDate()
+
   } else if (req.query.search) {
     console.log('  queried Search')
     applySearch()
@@ -162,11 +167,6 @@ app.get(config.baseURLPath + '/events/search', function (req, res) {
     
   } else if (req.query.date) {
     console.log('  queried single Date')
-    applySingleDate()
-
-  } else if (req.query.date && req.query.search) {
-    console.log('  queried single Date')
-    applySearch()
     applySingleDate()
 
   } else {
