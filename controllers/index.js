@@ -23,7 +23,7 @@ let sameDay = (d1, d2) => {
 }
 
 let whenAuthenticated = (auth_token, ip, success, failure) => {
-  if ( auth_token == 'concertina' && ip.startsWith('129.234') ) {
+  if ( auth_token == 'concertina' && ip.includes('129.234') ) {
     success()
   } else {
     db.all('SELECT * FROM Auth WHERE auth_token=?', auth_token, (err, rows) => {
