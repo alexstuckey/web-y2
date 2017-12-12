@@ -268,7 +268,7 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/events/add', function (req, res) {
-  whenAuthenticated(req.body.auth_token, req.ip, () => {
+  whenAuthenticated(req.headers.cookie.split('=')[1], req.ip, () => {
     // Validate all the input:
     //   REQUIRED: (id) title, venue_id, date
     //   OPTIOANL: url, blurb
@@ -323,7 +323,7 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
 
-  whenAuthenticated(req.body.auth_token, req.ip, () => {
+  whenAuthenticated(req.headers.cookie.split('=')[1], req.ip, () => {
     // Validate all the input:
     //   REQUIRED: name
     //   OPTIOANL: postcode, town, url, icon
