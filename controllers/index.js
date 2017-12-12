@@ -380,11 +380,19 @@ app.post(config.baseURLPath + '/admin.html', (req, res) => {
   // Check req.body.username and .password
   db.all('SELECT * FROM Auth WHERE authUsername=? AND authPassword=?', req.body.username, req.body.password, (err, rows) => {
     if (rows.length >= 1) {
-      // Set auth_token cookie
-      res.cookie('auth_token', rows[0].auth_token)
+      let dbDate = new Date(rows[0].authDatetime)
+      dbDate.setHours( dbDate.getHours() + 2 )
+      let now = new Date()
+      if ( dbDate > now ) {
+        // Set auth_token cookie
+        res.cookie('auth_token', rows[0].auth_token)
 
-      // Send page
-      res.sendFile('admin.html', {root: './static'})
+        // Send page
+        res.sendFile('admin.html', {root: './static'})
+      } else {
+        console.log("  expired user & pass")
+        res.sendFile('login.html', {root: './static'})
+      }
     } else {
       console.log("  invalid user & pass")
       res.sendFile('login.html', {root: './static'})
