@@ -282,10 +282,11 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
 
       // EXTERNAL CODE
       // Code from: https://stackoverflow.com/a/3143231/298051
-      re = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/
-      // END EXTERNAL CODE
+      reShort = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+      reLong = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
+      // END EXTERNAL CODE      
 
-      if (re.test(req.body.date)) {
+      if (reShort.test(req.body.date) || reLong.test(req.body.date)) {
         // and b) check that a venue exists with that id
         db.all('SELECT * FROM Venues WHERE venueID=?', req.body.venue_id, (err, rows) => {
           if (rows.length == 1) {
