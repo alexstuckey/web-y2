@@ -268,6 +268,7 @@ app.get(config.baseURLPath + '/venues', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/events/add', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
   whenAuthenticated(req.headers.cookie.split('=')[1], req.ip, () => {
     // Validate all the input:
     //   REQUIRED: (id) title, venue_id, date
@@ -322,6 +323,7 @@ app.post(config.baseURLPath + '/events/add', function (req, res) {
 })
 
 app.post(config.baseURLPath + '/venues/add', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
 
   whenAuthenticated(req.headers.cookie.split('=')[1], req.ip, () => {
     // Validate all the input:
@@ -391,6 +393,7 @@ app.post(config.baseURLPath + '/admin.html', (req, res) => {
 })
 
 app.post(config.baseURLPath + '/auth', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
   // username and password, then combines it with IP address
   // returns an auth_token
 
@@ -420,6 +423,7 @@ app.post(config.baseURLPath + '/auth', function (req, res) {
 })
 
 app.get(config.baseURLPath + '/auth', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
   if (!req.query.auth_token) {
     res.send(JSON.stringify({"authenticated": true,
                              "error": "no supplied auth_token"}))
@@ -433,6 +437,7 @@ app.get(config.baseURLPath + '/auth', function (req, res) {
 })
 
 app.get(config.baseURLPath + '/externalevents', function (req, res) {
+  res.setHeader('Content-Type', 'application/json')
   // Method for routing client requests to the Eventful API
   // http://api.eventful.com/
 
@@ -482,7 +487,6 @@ app.get(config.baseURLPath + '/externalevents', function (req, res) {
           if (err) {
             return console.error('xml parsing error:', err)
           } else {
-            res.setHeader('Content-Type', 'application/json')
             res.send(JSON.stringify(result))
             console.log('  returned external events')
           }
