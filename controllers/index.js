@@ -29,7 +29,17 @@ let whenAuthenticated = (auth_token, ip, success, failure) => {
     db.all('SELECT * FROM Auth WHERE auth_token=?', auth_token, (err, rows) => {
       if (rows.length >= 1) {
         console.log(rows)
-        if ( rows[0].authIP == ip ) {
+
+        let dbLocal = false
+        if ( rows[0].authIP === '::ffff:127.0.0.1' || rows[0].authIP === '::1') {
+          dbLocal = true
+        }
+        let reqLocal = false
+        if ( ip === '::ffff:127.0.0.1' || ip === '::1') {
+          reqLocal = true
+        }
+
+        if ( rows[0].authIP == ip || (dbLocal === true && reqLocal === true)) {
           let dbDate = new Date(rows[0].authDatetime)
           dbDate.setHours( dbDate.getHours() + 2 )
           let now = new Date()
