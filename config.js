@@ -3,6 +3,7 @@ var config = {
     baseURLPath: '/events2017',
     databasePath: "./efg.db",
     eventfulKey: ""
+    // place in an API key for Eventful
 }
 
 module.exports = config
